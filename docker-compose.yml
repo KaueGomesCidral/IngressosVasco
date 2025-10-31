@@ -1,0 +1,48 @@
+version: '3.0'
+
+services:
+  service-discovery:
+    build:
+      context: ./service-discovery
+    container_name: service-discovery
+    ports: ["8083:8080"]
+    networks: [app-network]
+
+  auth-service:
+    build: { context: ./auth-service }
+    container_name: auth-service
+    environment:
+      - JWT_SECRET=UmaSenhaLongaParaGerarHash
+    depends_on: [service-discovery]
+    networks: [app-network]
+
+  gateway-service:
+    build: { context: ./gateway-service }
+    container_name: gateway-service
+    environment:
+      - JWT_SECRET=UmaSenhaLongaParaGerarHash
+    ports: ["8080:8080"]
+    depends_on: [service-discovery, auth-service]
+    networks: [app-network]
+
+  events-service:
+    build: { context: ./events-service }
+    container_name: events-service
+    depends_on: [service-discovery]
+    networks: [app-network]
+
+  history-service:
+    build: { context: ./history-service }
+    container_name: history-service
+    depends_on: [service-discovery]
+    networks: [app-network]
+
+  payment-service:
+    build: { context: ./payment-service }
+    container_name: payment-service
+    depends_on: [service-discovery]
+    networks: [app-network]
+
+networks:
+  app-network:
+    driver: bridge
