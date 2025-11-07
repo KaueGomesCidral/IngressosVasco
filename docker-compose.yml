@@ -2,44 +2,51 @@ version: '3.0'
 
 services:
   service-discovery:
-    build:
-      context: ./service-discovery
+    build: { context: ./service-discovery }
     container_name: service-discovery
-    ports: ["8083:8080"]
+    ports: ["8080:8080"]
+    volumes: [./service-discovery:/app, ~/.m2:/root/.m2]
     networks: [app-network]
 
   auth-service:
     build: { context: ./auth-service }
     container_name: auth-service
-    environment:
-      - JWT_SECRET=UmaSenhaLongaParaGerarHash
+    environment: [JWT_SECRET=UmaSenhaLongaParaGerarHash]
+    ports: ["8081:8080"]
+    volumes: [./auth-service:/app,  ~/.m2:/root/.m2]
     depends_on: [service-discovery]
     networks: [app-network]
 
   gateway-service:
     build: { context: ./gateway-service }
     container_name: gateway-service
-    environment:
-      - JWT_SECRET=UmaSenhaLongaParaGerarHash
-    ports: ["8080:8080"]
+    environment: [JWT_SECRET=UmaSenhaLongaParaGerarHash]
+    ports: ["8082:8080"]
+    volumes: [./gateway-service:/app,  ~/.m2:/root/.m2]
     depends_on: [service-discovery, auth-service]
     networks: [app-network]
 
   events-service:
     build: { context: ./events-service }
     container_name: events-service
+    ports: ["8083:8080"]
+    volumes: [./events-service:/app,  ~/.m2:/root/.m2]
     depends_on: [service-discovery]
     networks: [app-network]
 
   history-service:
     build: { context: ./history-service }
     container_name: history-service
+    ports: ["8084:8080"]
+    volumes: [./history-service:/app,  ~/.m2:/root/.m2]
     depends_on: [service-discovery]
     networks: [app-network]
 
   payment-service:
     build: { context: ./payment-service }
     container_name: payment-service
+    ports: ["8085:8080"]
+    volumes: [./payment-service:/app,  ~/.m2:/root/.m2]
     depends_on: [service-discovery]
     networks: [app-network]
 
