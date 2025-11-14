@@ -5,62 +5,82 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.netflix.discovery.shared.Application;
-import com.rabbitmq.client.ConnectionFactory;
-
+@Configuration
 public class RabbitConfig {
-        public static final String ENCHANGE_NAME = "auth";
 
-        //Queues
-        public static final String NOTIFICATION_QUEUE_NAME = "notification";
-        public static final String CUPOM_QUEUE_NAME = "cupom";
+    public static final String EXCHANGE_NAME = "auth";
 
-        //Routing Keys
-        public static final String USER_CREATED_ROUTING_KEY = "auth.user.created";
-        public static final String USER_UPDATED_ROUTING_KEY = "auth.user.updated";
+    //Queues
+    public static final String NOTIFICATION_QUEUE_NAME = "notification";
+    public static final String CUPOM_QUEUE_NAME = "cupom";
 
-        @Bean
-        TopicExchange exchange() {
-                return new TopicExchange(EXCHANGE_NAME);
-        }
+    // Routing Keys
+    public static final String USER_CREATED_ROUTING_KEY = "auth.user.created";
+    public static final String USER_UPDATED_ROUTING_KEY = "auth.user.updated";
 
-        @Bean
-        Queue notificationQueue() {
-                return QueueBuilder.durable(NOTIFICATION_QUEUE_NAME).build();
-        }
+    @Bean
+    TopicExchange exchange() {
+        return new TopicExchange(EXCHANGE_NAME);
+    }
 
-        @Bean
-        Queue notificationQueueBinding() {
-                return BindingBuilder.bind(notificationQueue()).to(exchange()).with(USER_CREATED_ROUTING_KEY);
-        }
+    @Bean
+    Queue notificationQueue() {
+        return QueueBuilder.durable(NOTIFICATION_QUEUE_NAME).build();
+    }
 
-        @Bean
-        Queue cupomQueue() {
-                return QueueBuilder.durable(CUPOM_QUEUE_NAME).build();
-        }
+    @Bean
+    Binding notificationQueueBinding() {
+        return BindingBuilder
+            .bind(notificationQueue())
+            .to(exchange())
+            .with(USER_CREATED_ROUTING_KEY);
+    }
 
-        @Bean 
-        Binding cupomQueueBinding(){
-            return BindingBuilder.bind(cupomQueue()).to(exchange()).with(USER_CREATED_ROUTING_KEY);
-        }
+    @Bean
+    Queue cupomQueue() {
+        return QueueBuilder.durable(CUPOM_QUEUE_NAME).build();
+    }
 
-        @Bean
-        RabbitAdmin rabbitAdmin(ConnectionFactory connectionfactory){
-            return new RabbitAdmin(connectionfactory);
-        }
+    @Bean
+    Binding cupomQueueBinding() {
+        return BindingBuilder
+            .bind(cupomQueue())
+            .to(exchange())
+            .with(USER_CREATED_ROUTING_KEY);
+    }
 
-        @Bean
-        ApplicationListener<ApplicationReadyEvent> initializeRabbitMQ(RabbitAdmin RabbitAdmin){
-            return event -> {
-                RabbitAdmin.initialize();
+    @Bean
+    Jackson2JssonMessageConverter messageConverter() {
+        return new Jackson2JssonMessageConverter();
+    }
 
-            };
-        }
+    @Bean
+    RabbitTemplate rabbitTemplate(
+        ConnectionFactory connectionFactory,
+        Jackson2JssonMessageConverter messageConverter
+    ){
+        RabbitTemplate template = new RabbitTemplate(connectionFactory);
+        template.setMessageConverter(messageConverter);
+
+        return template;
+    }
+
+    @Bean
+    RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+        return new RabbitAdmin(connectionFactory);
+    }
+
+    @Bean
+    ApplicationListener<ApplicationReadyEvent> initializeRabbitMQ(RabbitAdmin rabbitAdmin) {
+        return event -> {
+            rabbitAdmin.initialize();
+        };
+    }
 }
