@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class RegisterUserHandler {
     private final UserRepository userRepository;
     private final PasswordHasher passwordHasher;
+    private final UserCreatedPublisher userCreatedPublisher;
 
     @Transactional
     public UserResponse handle(String nome, String emailRaw, String senha) {
@@ -22,6 +23,17 @@ public class RegisterUserHandler {
 
         String hash = passwordHasher.hash(senha);
         User user = new User(nome, hash, email, RoleType.CUSTOMER);
+
+        userCreatedPublisher.publish(
+            new UserCreatedEvent(
+                savedUser.getId(),
+                savedUser.getName(),
+                savedUser.getEmail().getValue(),
+                savedUser.getRole().getValue().name()
+            )
+        );
+
+
 
         User saved = userRepository.save(user);
         return new UserResponse(
