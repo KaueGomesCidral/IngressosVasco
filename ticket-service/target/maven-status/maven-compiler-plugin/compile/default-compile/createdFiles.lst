@@ -1,10 +1,10 @@
 com/example/ticket_service/domain/Seat.class
 com/example/ticket_service/infrastructure/persistence/SpringDataTicketRepository.class
-com/example/ticket_service/EventsServiceApplication.class
 com/example/ticket_service/application/QRService.class
 com/example/ticket_service/interfaces/RootController.class
 com/example/ticket_service/interfaces/rest/TicketController.class
 com/example/ticket_service/interfaces/rest/ReservationController.class
+com/example/ticket_service/TicketServiceApplication.class
 com/example/ticket_service/domain/Ticket.class
 com/example/ticket_service/infrastructure/persistence/SpringDataReservationRepository.class
 com/example/ticket_service/infrastructure/scheduling/ReservationCleanupTask.class
