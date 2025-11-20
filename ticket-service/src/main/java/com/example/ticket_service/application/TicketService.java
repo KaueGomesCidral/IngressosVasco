@@ -1,11 +1,11 @@
 package com.example.ticket_service.application;
 
-import com.example.events_service.domain.Reservation;
-import com.example.events_service.domain.Seat;
-import com.example.events_service.domain.Ticket;
-import com.example.events_service.infrastructure.persistence.SpringDataReservationRepository;
-import com.example.events_service.infrastructure.persistence.SpringDataSeatRepository;
-import com.example.events_service.infrastructure.persistence.SpringDataTicketRepository;
+import com.example.ticket_service.domain.Reservation;
+import com.example.ticket_service.domain.Seat;
+import com.example.ticket_service.domain.Ticket;
+import com.example.ticket_service.infrastructure.persistence.SpringDataReservationRepository;
+import com.example.ticket_service.infrastructure.persistence.SpringDataSeatRepository;
+import com.example.ticket_service.infrastructure.persistence.SpringDataTicketRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,7 +1,7 @@
 package com.example.ticket_service.infrastructure.scheduling;
 
-import com.example.events_service.infrastructure.persistence.SpringDataReservationRepository;
-import com.example.events_service.application.TicketService;
+import com.example.ticket_service.infrastructure.persistence.SpringDataReservationRepository;
+import com.example.ticket_service.application.TicketService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,6 @@
 package com.example.ticket_service.infrastructure.persistence;
 
-import com.example.events_service.domain.Reservation;
+import com.example.ticket_service.domain.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.Instant;

@@ -1,7 +1,7 @@
 package com.example.ticket_service.interfaces.rest;
 
-import com.example.events_service.application.TicketService;
-import com.example.events_service.domain.Ticket;
+import com.example.ticket_service.application.TicketService;
+import com.example.ticket_service.domain.Ticket;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
