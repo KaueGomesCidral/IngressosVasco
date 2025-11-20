@@ -50,6 +50,14 @@ services:
     depends_on: [service-discovery]
     networks: [app-network]
 
+  ticket-service:
+    build: { context: ./ticket-service }
+    container_name: ticket-service
+    ports: ["8086:8080"]
+    volumes: [./ticket-service:/app,  ~/.m2:/root/.m2]
+    depends_on: [service-discovery]
+    networks: [app-network]
+
 networks:
   app-network:
     driver: bridge

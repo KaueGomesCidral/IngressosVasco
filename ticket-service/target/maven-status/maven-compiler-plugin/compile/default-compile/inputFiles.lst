@@ -1,0 +1,13 @@
+/app/src/main/java/com/example/events_service/infrastructure/persistence/SpringDataSeatRepository.java
+/app/src/main/java/com/example/events_service/EventsServiceApplication.java
+/app/src/main/java/com/example/events_service/application/TicketService.java
+/app/src/main/java/com/example/events_service/infrastructure/persistence/SpringDataReservationRepository.java
+/app/src/main/java/com/example/events_service/interfaces/RootController.java
+/app/src/main/java/com/example/events_service/application/QRService.java
+/app/src/main/java/com/example/events_service/interfaces/rest/TicketController.java
+/app/src/main/java/com/example/events_service/domain/Ticket.java
+/app/src/main/java/com/example/events_service/infrastructure/persistence/SpringDataTicketRepository.java
+/app/src/main/java/com/example/events_service/domain/Reservation.java
+/app/src/main/java/com/example/events_service/infrastructure/scheduling/ReservationCleanupTask.java
+/app/src/main/java/com/example/events_service/domain/Seat.java
+/app/src/main/java/com/example/events_service/interfaces/rest/ReservationController.java
