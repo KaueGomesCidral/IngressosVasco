@@ -32,6 +32,6 @@ public class UserController {
     public ResponseEntity<UserResponse> create(@Valid @RequestBody UserRequest user) {
         UserResponse created = register.handle(user.name(), user.email(), user.password());
 
-        return ResponseEntity.created(URI.create("users/" + created.id())).body(created);
+        return ResponseEntity.created(URI.create("/users/" + created.id())).body(created);
     }
 }

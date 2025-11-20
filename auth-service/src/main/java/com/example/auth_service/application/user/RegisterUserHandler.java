@@ -6,6 +6,8 @@ import com.example.auth_service.domain.user.UserRepository;
 import com.example.auth_service.domain.user.vo.Email;
 import com.example.auth_service.domain.user.vo.RoleType;
 import com.example.auth_service.interfaces.rest.dto.user.UserResponse;
+import com.example.auth_service.messaging.events.UserCreatedEvent;
+import com.example.auth_service.messaging.events.UserCreatedPublisher;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,18 +26,17 @@ public class RegisterUserHandler {
         String hash = passwordHasher.hash(senha);
         User user = new User(nome, hash, email, RoleType.CUSTOMER);
 
+        User saved = userRepository.save(user);
+
         userCreatedPublisher.publish(
             new UserCreatedEvent(
-                savedUser.getId(),
-                savedUser.getName(),
-                savedUser.getEmail().getValue(),
-                savedUser.getRole().getValue().name()
+                saved.getId(),
+                saved.getName(),
+                saved.getEmail().getValue(),
+                saved.getRole().getValue().name()
             )
         );
 
-
-
-        User saved = userRepository.save(user);
         return new UserResponse(
                 saved.getId(),
                 saved.getName(),

@@ -1,0 +1,92 @@
+# Variáveis
+@auth = http://localhost:8081
+@gateway = http://localhost:8082
+@events = http://localhost:8083
+@history = http://localhost:8084
+@payment = http://localhost:8085
+@ticket = http://localhost:8086
+@discovery = http://localhost:8080
+
+### Auth - Registrar usuário
+POST {{auth}}/users
+Content-Type: application/json
+
+{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "password": "minhasenha123"
+}
+
+### Auth - Login com senha (retorna accessToken)
+POST {{auth}}/auth/login/password
+Content-Type: application/json
+
+{
+  "email": "joao@example.com",
+  "password": "minhasenha123"
+}
+
+### Auth - Request magic link (aceita mesmo que usuário não exista)
+POST {{auth}}/auth/login/magic
+Content-Type: application/json
+
+{
+  "email": "joao@example.com"
+}
+
+### Auth - Verificar magic link (usa token recebido por e-mail)
+POST {{auth}}/auth/login/magic/verify
+Content-Type: application/json
+
+{
+  "token": "TOKEN_RECEBIDO"
+}
+
+### Users - Listar (paginação Spring)
+GET {{auth}}/users?page=0&size=10
+
+### Health checks dos serviços
+GET {{events}}/s/api/event/_health
+GET {{ticket}}/s/api/ticket/_health
+GET {{payment}}/api/payment/_health
+GET {{history}}/api/history/_health
+GET {{gateway}}/actuator/health
+GET {{discovery}}/actuator/health
+
+### Ticket Service - Criar reserva
+# Parâmetros obrigatórios: userId, eventId, ttlSeconds (em segundos)
+POST {{ticket}}/api/reservations?userId=00000000-0000-0000-0000-000000000000&eventId=11111111-1111-1111-1111-111111111111&ttlSeconds=600
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+[
+  "A1",
+  "A2"
+]
+
+### Ticket Service - Cancelar reserva
+DELETE {{ticket}}/api/reservations/{reservationId}
+Authorization: Bearer {{accessToken}}
+
+### Ticket Service - Commit reserva (gera tickets)
+POST {{ticket}}/api/reservations/{reservationId}/commit
+Authorization: Bearer {{accessToken}}
+
+### Ticket Service - Regenerar QR do ticket
+POST {{ticket}}/api/tickets/{ticketId}/qr/regenerate
+Authorization: Bearer {{accessToken}}
+
+### Ticket Service - Transferir ticket
+POST {{ticket}}/api/tickets/{ticketId}/transfer?fromUser=00000000-0000-0000-0000-000000000000&toUser=22222222-2222-2222-2222-222222222222
+Authorization: Bearer {{accessToken}}
+
+# Observações
+- Substitua `{{accessToken}}` pelo token retornado no login.
+- As portas usadas seguem o `docker-compose.yml` do repositório (host:container):
+  - `auth` → host:8081 (container:8080)
+  - `gateway` → host:8082
+  - `events` → host:8083
+  - `history` → host:8084
+  - `payment` → host:8085
+  - `ticket` → host:8086
+  - `service-discovery` → host:8080
