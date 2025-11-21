@@ -12,8 +12,8 @@ POST {{auth}}/users
 Content-Type: application/json
 
 {
-  "name": "João Silva",
-  "email": "joao@example.com",
+  "name": "João Silva1",
+  "email": "joao1@example.com",
   "password": "minhasenha123"
 }
 

@@ -1,0 +1,18 @@
+### Health (gateway)
+GET http://localhost:8082/
+Accept: application/json
+
+### Proxy: Create Reservation via Gateway (gateway may require JWT)
+POST http://localhost:8082/api/tickets/reservations
+Content-Type: application/json
+Authorization: Bearer {{jwt_token}}
+
+{
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "eventId": "event-001",
+  "seatNumbers": ["A1"],
+  "ttlSeconds": 300
+}
+
+### Note
+# If gateway is configured to proxy ticket-service under a different path, adjust the path accordingly.
