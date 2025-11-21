@@ -1,0 +1,17 @@
+### Health
+GET http://localhost:8083/
+Accept: application/json
+
+### List Events
+GET http://localhost:8083/api/events
+Accept: application/json
+
+### Create Event
+POST http://localhost:8083/api/events
+Content-Type: application/json
+
+{
+  "name": "Vasco x Time Exemplo",
+  "date": "2025-12-01T20:00:00",
+  "venue": "São Januário"
+}

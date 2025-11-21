@@ -1,0 +1,3 @@
+com/example/history_service/interfaces/rest/RestExceptionHandler.class
+com/example/history_service/interfaces/rest/dto/HealthResponse.class
+com/example/history_service/interfaces/rest/dto/ErrorResponse.class

@@ -1,0 +1,22 @@
+### Health
+GET http://localhost:8086/
+Accept: application/json
+
+### Create Reservation
+POST http://localhost:8086/api/reservations
+Content-Type: application/json
+
+{
+  "userId": "123e4567-e89b-12d3-a456-426614174000",
+  "eventId": "event-001",
+  "seatNumbers": ["A1","A2"],
+  "ttlSeconds": 300
+}
+
+### Get Reservation
+GET http://localhost:8086/api/reservations/{{reservationId}}
+Accept: application/json
+
+### Get Ticket
+GET http://localhost:8086/api/tickets/{{ticketId}}
+Accept: application/json

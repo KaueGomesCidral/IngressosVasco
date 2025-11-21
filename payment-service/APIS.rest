@@ -1,0 +1,23 @@
+### Health
+GET http://localhost:8085/
+Accept: application/json
+
+### Create Payment
+POST http://localhost:8085/api/payments
+Content-Type: application/json
+
+{
+  "reservationId": "{{reservationId}}",
+  "userId": "{{userId}}",
+  "amount": 150.00,
+  "method": "CREDIT_CARD",
+  "card": {
+    "number": "4111111111111111",
+    "expiry": "12/26",
+    "cvv": "123"
+  }
+}
+
+### Get Payment
+GET http://localhost:8085/api/payments/{{paymentId}}
+Accept: application/json

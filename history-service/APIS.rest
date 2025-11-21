@@ -1,0 +1,11 @@
+### Health
+GET http://localhost:8084/
+Accept: application/json
+
+### Get User History
+GET http://localhost:8084/api/history/users/{{userId}}
+Accept: application/json
+
+### Example
+GET http://localhost:8084/api/history/users/123e4567-e89b-12d3-a456-426614174000
+Accept: application/json
