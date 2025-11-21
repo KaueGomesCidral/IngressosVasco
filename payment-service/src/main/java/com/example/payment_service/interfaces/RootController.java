@@ -1,13 +1,14 @@
 package com.example.payment_service.interfaces;
 
+import com.example.payment_service.interfaces.rest.dto.HealthResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Map;
 
 @RestController
 public class RootController {
-    @GetMapping("/api/payment/_health")
-    public Map<String, String> health() {
-        return Map.of("service","payment-service","status","OK");
+    @GetMapping("/s/api/payment/_health")
+    public ResponseEntity<HealthResponse> health() {
+        return ResponseEntity.ok(new HealthResponse("payment-service", "OK"));
     }
 }

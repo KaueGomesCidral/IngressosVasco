@@ -1,4 +1,4 @@
-package com.example.auth_service.messaging .events;
+package com.example.auth_service.messaging.events;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
