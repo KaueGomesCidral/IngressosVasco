@@ -1,22 +1,27 @@
 package com.example.auth_service.messaging.events;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.stereotype.Service;
-import com.example.auth_service.messaging.RabbitConfig;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
+@RequiredArgsConstructor
+@Slf4j
 public class UserCreatedPublisher {
-    private final RabbitTemplate template;
 
-    public UserCreatedPublisher(RabbitTemplate template) {
-        this.template = template;
-    }
+    private final ApplicationEventPublisher eventPublisher;
 
     public void publish(UserCreatedEvent event) {
-        template.convertAndSend(
-            RabbitConfig.EXCHANGE_NAME,
-            RabbitConfig.USER_CREATED_ROUTING_KEY,
-            event
-        );
+        log.info("Publishing UserCreatedEvent: {}", event);
+        eventPublisher.publishEvent(event);
+    }
+
+    public void send(UserCreatedEvent event) {
+        publish(event);
+    }
+
+    public void publishUserCreated(UserCreatedEvent event) {
+        publish(event);
     }
 }
