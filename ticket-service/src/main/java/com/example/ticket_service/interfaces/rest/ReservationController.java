@@ -41,6 +41,12 @@ public class ReservationController {
         return ResponseEntity.ok(toDto(t));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservationResponse> get(@PathVariable UUID id) {
+        Reservation r = service.getReservation(id);
+        return ResponseEntity.ok(toDto(r));
+    }
+
     private ReservationResponse toDto(Reservation r) {
         List<SeatResponse> seats = r.getSeats().stream()
                 .map(this::toSeatDto)

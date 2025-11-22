@@ -114,4 +114,9 @@ public class TicketService {
         ticket.setQrPayload(qrService.generatePayloadForTicket(ticket.getSeatId(), ticket.getOwnerId()));
         return ticketRepo.save(ticket);
     }
+
+    public Reservation getReservation(UUID id) {
+        return reservationRepo.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("reservation not found"));
+    }
 }

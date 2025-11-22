@@ -1,22 +1,31 @@
 ### Health
-GET http://localhost:8086/
+GET http://localhost:8086/s/api/ticket/_health
 Accept: application/json
 
 ### Create Reservation
-POST http://localhost:8086/api/reservations
+POST http://localhost:8086/api/reservations?userId=123e4567-e89b-12d3-a456-426614174000&eventId=11111111-1111-1111-1111-111111111111&ttlSeconds=300
 Content-Type: application/json
 
-{
-  "userId": "123e4567-e89b-12d3-a456-426614174000",
-  "eventId": "event-001",
-  "seatNumbers": ["A1","A2"],
-  "ttlSeconds": 300
-}
+[
+  "A1",
+  "A2"
+]
+
 
 ### Get Reservation
-GET http://localhost:8086/api/reservations/{{reservationId}}
+GET http://localhost:8086/api/reservations/5f61f3b1-e85a-4d42-984b-10c2d5c7bb5e
+Accept: application/json
+
+### Cancel Reservation
+DELETE http://localhost:8086/api/reservations/38308810-fd4c-4b67-bf1c-fcae20e5853f
+Accept: application/json
+
+### Commit Reservation
+POST http://localhost:8086/api/reservations/38308810-fd4c-4b67-bf1c-fcae20e5853f/commit
 Accept: application/json
 
 ### Get Ticket
-GET http://localhost:8086/api/tickets/{{ticketId}}
+GET http://localhost:8086/api/tickets/38308810-fd4c-4b67-bf1c-fcae20e5853f
 Accept: application/json
+
+
