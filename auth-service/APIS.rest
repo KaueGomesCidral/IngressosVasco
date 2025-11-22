@@ -8,14 +8,18 @@
 @discovery = http://localhost:8080
 
 ### Auth - Criar usuário
+# @name createUser
 POST {{auth}}/users
 Content-Type: application/json
 
 {
   "name": "João",
-  "email": "joao3@example.com",
+  "email": "joao4@example.com",
   "password": "minhasenha123"
 }
+
+### Definir userId para uso nas próximas requisições
+@userId = {{createUser.response.body.id}}
 
 ### Auth - Login com senha (retorna accessToken)
 # @name login

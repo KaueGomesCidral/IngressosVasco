@@ -1,3 +1,4 @@
+/app/src/main/java/com/example/history_service/interfaces/rest/HistoryController.java
 /app/src/main/java/com/example/history_service/interfaces/RootController.java
 /app/src/main/java/com/example/history_service/interfaces/rest/RestExceptionHandler.java
 /app/src/main/java/com/example/history_service/HistoryServiceApplication.java
