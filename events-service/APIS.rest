@@ -1,5 +1,5 @@
 ### Health
-GET http://localhost:8083/
+GET http://localhost:8083/s/api/events/_health
 Accept: application/json
 
 ### List Events

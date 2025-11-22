@@ -1,4 +1,7 @@
+com/example/events_service/interfaces/rest/EventController$EventRequest.class
 com/example/events_service/messaging/events/UserCreatedEvent.class
+com/example/events_service/interfaces/rest/EventController.class
 com/example/events_service/interfaces/rest/dto/ErrorResponse.class
+com/example/events_service/interfaces/rest/EventController$EventResponse.class
 com/example/events_service/interfaces/rest/dto/HealthResponse.class
 com/example/events_service/interfaces/rest/RestExceptionHandler.class
