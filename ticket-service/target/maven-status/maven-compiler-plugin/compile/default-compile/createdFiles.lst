@@ -1,3 +1,4 @@
+com/example/ticket_service/interfaces/rest/SeatController.class
 com/example/ticket_service/domain/Seat.class
 com/example/ticket_service/interfaces/rest/dto/HealthResponse.class
 com/example/ticket_service/infrastructure/persistence/SpringDataTicketRepository.class

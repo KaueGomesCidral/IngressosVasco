@@ -10,6 +10,8 @@ import com.example.auth_service.interfaces.rest.dto.auth.PasswordLoginRequest;
 import com.example.auth_service.interfaces.rest.dto.user.UserRequest;
 import com.example.auth_service.interfaces.rest.dto.user.UserResponse;
 import jakarta.validation.Valid;
+import java.net.URI;
+import com.example.auth_service.interfaces.rest.dto.auth.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
