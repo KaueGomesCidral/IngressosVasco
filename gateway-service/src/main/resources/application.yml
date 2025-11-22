@@ -1,0 +1,61 @@
+server:
+  port: 8080   # <-- corrigido para a porta do container (compatível com Dockerfile EXPOSE 8080)
+
+jwt:
+  secret: "changeme-please-replace"
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: auth-users
+          uri: http://auth-service:8080
+          predicates:
+            - Path=/auth/users
+            - Method=POST
+          filters:
+            - RewritePath=/auth/users, /users
+        - id: auth
+          uri: http://auth-service:8080
+          predicates:
+            - Path=/auth/**
+        - id: events-api
+          uri: http://events-service:8080
+          predicates:
+            - Path=/api/events/**
+        - id: events-health
+          uri: http://events-service:8080
+          predicates:
+            - Path=/s/api/events/_health
+        - id: ticket-seats
+          uri: http://ticket-service:8080
+          predicates:
+            - Path=/api/seats/**
+        - id: ticket-reservations
+          uri: http://ticket-service:8080
+          predicates:
+            - Path=/api/reservations/**
+        - id: ticket-tickets
+          uri: http://ticket-service:8080
+          predicates:
+            - Path=/api/tickets/**
+        - id: ticket-health
+          uri: http://ticket-service:8080
+          predicates:
+            - Path=/s/api/ticket/_health
+        - id: payment-api
+          uri: http://payment-service:8080
+          predicates:
+            - Path=/api/payments/**
+        - id: payment-health
+          uri: http://payment-service:8080
+          predicates:
+            - Path=/s/api/payment/_health
+        - id: history-api
+          uri: http://history-service:8080
+          predicates:
+            - Path=/api/history/**
+        - id: history-health
+          uri: http://history-service:8080
+          predicates:
+            - Path=/s/api/history/_health

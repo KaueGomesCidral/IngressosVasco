@@ -13,19 +13,19 @@ Content-Type: application/json
 
 
 ### Get Reservation
-GET http://localhost:8086/api/reservations/999bd482-4422-4c4d-a4e6-0fa9e50facfb
+GET http://localhost:8086/api/reservations/95d2e2bd-fb5d-45ab-bc8a-51c3ce85d671
 Accept: application/json
 
 ### Cancel Reservation
-DELETE http://localhost:8086/api/reservations/dc2eab12-bd89-4903-a1af-bad3e83e6724
+DELETE http://localhost:8086/api/reservations/95d2e2bd-fb5d-45ab-bc8a-51c3ce85d671
 Accept: application/json
 
 ### Commit Reservation
-POST http://localhost:8086/api/reservations/999bd482-4422-4c4d-a4e6-0fa9e50facfb/commit
+POST http://localhost:8086/api/reservations/2f3afbfd-5765-4171-a5ee-826c8fa8da0f/commit
 Accept: application/json
 
 ### Get Ticket
-GET http://localhost:8086/api/tickets/c42234c2-f7e3-42a5-8620-a92bf1dd4ab5
+GET http://localhost:8086/api/tickets/75fb1695-b232-4a9d-85bb-e79c0fefd359
 Accept: application/json
 
 

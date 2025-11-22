@@ -6,6 +6,7 @@ import com.example.ticket_service.interfaces.rest.dto.TicketResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,6 +35,13 @@ public class TicketController {
     public ResponseEntity<TicketResponse> get(@PathVariable UUID ticketId) {
         Ticket t = service.getTicket(ticketId);
         return ResponseEntity.ok(toDto(t));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TicketResponse>> listByOwner(@RequestParam UUID ownerId) {
+        java.util.List<Ticket> tickets = service.getTicketsByOwner(ownerId);
+        java.util.List<TicketResponse> dto = tickets.stream().map(this::toDto).toList();
+        return ResponseEntity.ok(dto);
     }
 
     private TicketResponse toDto(Ticket t) {

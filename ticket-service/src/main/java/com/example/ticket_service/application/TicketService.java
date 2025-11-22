@@ -130,4 +130,8 @@ public class TicketService {
         return ticketRepo.findById(ticketId)
             .orElseThrow(() -> new IllegalArgumentException("ticket not found"));
     }
+
+    public java.util.List<Ticket> getTicketsByOwner(UUID ownerId) {
+        return ticketRepo.findByOwnerId(ownerId);
+    }
 }

@@ -1,9 +1,5 @@
 ### Health
-GET http://localhost:8084/
-Accept: application/json
-
-### Get User History
-GET http://localhost:8084/api/history/users/f9c85549-911c-4e12-ad30-d3f501627ae3
+GET http://localhost:8084/s/api/history/_health
 Accept: application/json
 
 ### Record Purchase (simula ticket-service chamando history-service)
@@ -18,6 +14,10 @@ Content-Type: application/json
   "issuedAt": "2025-11-22T12:00:00Z"
 }
 
+### Get User History
+GET http://localhost:8084/api/history/users/5614c11e-6c12-4280-8e1e-92ce8c9df331
+Accept: application/json
+
 ### Ver histórico do usuário
-GET http://localhost:8084/api/history/users/00000000-0000-0000-0000-000000000000
+GET http://localhost:8084/api/history/users/e02cb241-7ff7-482e-96f0-13fd1417261d
 Accept: application/json
