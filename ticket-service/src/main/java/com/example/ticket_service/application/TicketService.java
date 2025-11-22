@@ -6,6 +6,8 @@ import com.example.ticket_service.domain.Ticket;
 import com.example.ticket_service.infrastructure.persistence.SpringDataReservationRepository;
 import com.example.ticket_service.infrastructure.persistence.SpringDataSeatRepository;
 import com.example.ticket_service.infrastructure.persistence.SpringDataTicketRepository;
+import com.example.ticket_service.application.QRService;
+import com.example.ticket_service.infrastructure.http.HistoryClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,15 +23,18 @@ public class TicketService {
     private final SpringDataReservationRepository reservationRepo;
     private final SpringDataTicketRepository ticketRepo;
     private final QRService qrService;
+    private final HistoryClient historyClient;
 
     public TicketService(SpringDataSeatRepository seatRepo,
                          SpringDataReservationRepository reservationRepo,
                          SpringDataTicketRepository ticketRepo,
-                         QRService qrService) {
+                         QRService qrService,
+                         HistoryClient historyClient) {
         this.seatRepo = seatRepo;
         this.reservationRepo = reservationRepo;
         this.ticketRepo = ticketRepo;
         this.qrService = qrService;
+        this.historyClient = historyClient;
     }
 
     @Transactional
@@ -92,7 +97,8 @@ public class TicketService {
             t.setOwnerId(r.getUserId());
             t.setIssuedAt(now);
             t.setQrPayload(qrService.generatePayloadForTicket(s.getId(), r.getUserId()));
-            ticketRepo.save(t);
+            Ticket saved = ticketRepo.save(t);
+            historyClient.recordPurchase(r.getUserId(), saved.getId(), s.getEventId(), s.getId(), now);
         }
 
         reservationRepo.delete(r);

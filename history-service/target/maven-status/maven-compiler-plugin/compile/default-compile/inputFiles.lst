@@ -1,6 +1,8 @@
 /app/src/main/java/com/example/history_service/interfaces/rest/HistoryController.java
 /app/src/main/java/com/example/history_service/interfaces/RootController.java
+/app/src/main/java/com/example/history_service/infrastructure/persistence/SpringDataHistoryPurchaseRepository.java
 /app/src/main/java/com/example/history_service/interfaces/rest/RestExceptionHandler.java
 /app/src/main/java/com/example/history_service/HistoryServiceApplication.java
 /app/src/main/java/com/example/history_service/interfaces/rest/dto/HealthResponse.java
 /app/src/main/java/com/example/history_service/interfaces/rest/dto/ErrorResponse.java
+/app/src/main/java/com/example/history_service/domain/HistoryPurchase.java
