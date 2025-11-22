@@ -10,7 +10,6 @@ import java.util.*;
 @RequestMapping("/api/events")
 public class EventController {
 
-    // Simulação em memória
     private final Map<UUID, EventResponse> events = new HashMap<>();
 
     @GetMapping
@@ -25,8 +24,6 @@ public class EventController {
         events.put(id, event);
         return ResponseEntity.ok(event);
     }
-
-    // DTOs
     public record EventRequest(String name, LocalDateTime date, String venue) {}
     public record EventResponse(UUID id, String name, LocalDateTime date, String venue) {}
 }
