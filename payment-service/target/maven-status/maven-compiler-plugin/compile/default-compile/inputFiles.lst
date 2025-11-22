@@ -1,5 +1,9 @@
+/app/src/main/java/com/example/payment_service/application/PaymentService.java
+/app/src/main/java/com/example/payment_service/interfaces/rest/PaymentRequest.java
 /app/src/main/java/com/example/payment_service/interfaces/rest/RestExceptionHandler.java
 /app/src/main/java/com/example/payment_service/interfaces/RootController.java
 /app/src/main/java/com/example/payment_service/interfaces/rest/dto/HealthResponse.java
+/app/src/main/java/com/example/payment_service/config/RestConfig.java
 /app/src/main/java/com/example/payment_service/interfaces/rest/dto/ErrorResponse.java
+/app/src/main/java/com/example/payment_service/interfaces/rest/PaymentController.java
 /app/src/main/java/com/example/payment_service/PaymentServiceApplication.java

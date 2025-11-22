@@ -1,10 +1,73 @@
-### Health
-GET http://localhost:8085/
-Accept: application/json
+# Variáveis de serviços
+@auth = http://localhost:8081
+@events = http://localhost:8083
+@ticket = http://localhost:8086
+@payment = http://localhost:8085
 
-### Create Payment
-POST http://localhost:8085/api/payments
+### 1) Criar usuário (Auth)
+POST {{auth}}/users
 Content-Type: application/json
+
+{
+  "name": "Teste Payment",
+  "email": "teste.payment@example.com",
+  "password": "minhasenha123"
+}
+
+# pega id do usuário
+@userId = {{createUser.response.body.id}}
+
+### 2) Login (obter token)
+POST {{auth}}/auth/login/password
+Content-Type: application/json
+
+{
+  "email": "teste.payment@example.com",
+  "password": "minhasenha123"
+}
+
+# pega access token
+@accessToken = {{login.response.body.accessToken}}
+
+### 3) Criar evento (Events)
+POST {{events}}/api/events
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Show Teste",
+  "date": "2025-12-01T20:00:00",
+  "venue": "São Teste"
+}
+
+@eventId = {{createEvent.response.body.id}}
+
+### 4) Criar assentos para o evento (Ticket Service)
+POST {{ticket}}/api/seats?eventId={{eventId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+[
+  "A1",
+  "A2"
+]
+
+### 5) Criar reserva (Ticket Service)
+POST {{ticket}}/api/reservations?userId={{userId}}&eventId={{eventId}}&ttlSeconds=300
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+[
+  "A1",
+  "A2"
+]
+
+@reservationId = {{create.response.body.id}}
+
+### 6) Criar pagamento (Payment Service) — cenário SUCESSO
+POST {{payment}}/api/payments
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
 
 {
   "reservationId": "{{reservationId}}",
@@ -18,6 +81,26 @@ Content-Type: application/json
   }
 }
 
-### Get Payment
-GET http://localhost:8085/api/payments/{{paymentId}}
+# Depois de sucesso, a reserva deve ser commitada pelo payment-service -> a reserva deixará de existir
+
+### 7) Verificar reserva (deve retornar 404 se commitado)
+GET {{ticket}}/api/reservations/{{reservationId}}
 Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### 8) Simular falha: pagamento para reservation inexistente (deve retornar 502)
+POST {{payment}}/api/payments
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "reservationId": "00000000-0000-0000-0000-000000000000",
+  "userId": "{{userId}}",
+  "amount": 150.00,
+  "method": "CREDIT_CARD"
+}
+
+### Observações
+# - Se quiser conferir o ticket gerado, use diretamente o endpoint de commit do ticket-service:
+#   POST {{ticket}}/api/reservations/{{reservationId}}/commit
+#   (isso retornará o TicketResponse — atenção: se o payment-service já tiver efetuado o commit a reserva não existirá)
