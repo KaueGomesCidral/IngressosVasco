@@ -30,6 +30,12 @@ public class TicketController {
         return ResponseEntity.ok(toDto(t));
     }
 
+    @GetMapping("/{ticketId}")
+    public ResponseEntity<TicketResponse> get(@PathVariable UUID ticketId) {
+        Ticket t = service.getTicket(ticketId);
+        return ResponseEntity.ok(toDto(t));
+    }
+
     private TicketResponse toDto(Ticket t) {
         if (t == null) return null;
         return new TicketResponse(t.getId(), t.getSeatId(), t.getOwnerId(), t.getIssuedAt(), t.getQrPayload());
