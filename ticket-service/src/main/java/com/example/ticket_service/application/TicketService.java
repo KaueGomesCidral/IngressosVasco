@@ -119,4 +119,9 @@ public class TicketService {
         return reservationRepo.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("reservation not found"));
     }
+
+    public Ticket getTicket(UUID ticketId) {
+        return ticketRepo.findById(ticketId)
+            .orElseThrow(() -> new IllegalArgumentException("ticket not found"));
+    }
 }
