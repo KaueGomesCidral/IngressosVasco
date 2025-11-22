@@ -1,0 +1,7 @@
+com/example/history_service/interfaces/rest/RestExceptionHandler.class
+com/example/history_service/interfaces/rest/HistoryController.class
+com/example/history_service/interfaces/rest/dto/HealthResponse.class
+com/example/history_service/domain/HistoryPurchase.class
+com/example/history_service/interfaces/rest/dto/ErrorResponse.class
+com/example/history_service/infrastructure/persistence/SpringDataHistoryPurchaseRepository.class
+com/example/history_service/interfaces/rest/HistoryController$PurchaseRequest.class
