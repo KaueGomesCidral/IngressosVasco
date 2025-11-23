@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
   "name": "João",
-  "email": "joao4@example.com",
+  "email": "joao1@example.com",
   "password": "minhasenha123"
 }
 
@@ -27,7 +27,7 @@ POST {{auth}}/auth/login/password
 Content-Type: application/json
 
 {
-  "email": "joao3@example.com",
+  "email": "joao1@example.com",
   "password": "minhasenha123"
 }
 
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 ### Ticket Service - Criar reserva
 # @name createReservation
-POST {{ticket}}/api/reservations?userId=00000000-0000-0000-0000-000000000000&eventId=11111111-1111-1111-1111-111111111111&ttlSeconds=600
+POST {{ticket}}/api/reservations?userId=5614c11e-6c12-4280-8e1e-92ce8c9df331&eventId=11111111-1111-1111-1111-111111111111&ttlSeconds=600
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 

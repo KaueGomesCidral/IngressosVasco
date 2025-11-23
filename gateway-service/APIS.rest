@@ -1,18 +1,95 @@
-### Health (gateway)
-GET http://localhost:8082/
+# Variáveis
+@gateway = http://localhost:8082
+
+### Health do gateway
+GET {{gateway}}/s/api/gateway/_health
 Accept: application/json
 
-### Criar reserva via Gateway (gateway pode precisar do JWT)
-POST http://localhost:8082/api/tickets/reservations
+### 1) Criar usuário (Auth via gateway)
+# @name createUser
+POST {{gateway}}/auth/register
 Content-Type: application/json
-Authorization: Bearer {{jwt_token}}
 
 {
-  "userId": "123e4567-e89b-12d3-a456-426614174000",
-  "eventId": "event-001",
-  "seatNumbers": ["A1"],
-  "ttlSeconds": 300
+  "name": "Usuario Gateway",
+  "email": "usuario.gateway1@example.com",
+  "password": "minhasenha123"
 }
 
-### Observação:
-# Se o gateway is configurado para o proxy ticket-service sob um caminho diferente, ajuste de acordo com o caminho.
+@userId = {{createUser.response.body.id}}
+
+### 2) Login (Auth via gateway)
+# @name login
+POST {{gateway}}/auth/login/password
+Content-Type: application/json
+
+{
+  "email": "usuario.gateway@example.com",
+  "password": "minhasenha123"
+}
+
+@accessToken = {{login.response.body.accessToken}}
+
+### 3) Criar evento (Events via gateway)
+# @name createEvent
+POST {{gateway}}/api/events
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Evento Gateway",
+  "date": "2025-12-01T20:00:00",
+  "venue": "São Januário"
+}
+
+@eventId = {{createEvent.response.body.id}}
+
+### 4) Criar assentos para o evento (Ticket via gateway)
+POST {{gateway}}/api/seats?eventId={{eventId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+[
+  "A1",
+  "A2"
+]
+
+### 5) Criar reserva (Ticket via gateway) -> salva {{reservationId}}
+# @name createReservation
+POST {{gateway}}/api/reservations?userId={{userId}}&eventId={{eventId}}&ttlSeconds=300
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+[
+  "A1",
+  "A2"
+]
+
+@reservationId = {{createReservation.response.body.id}}
+
+### 6) Pagar (Payment via gateway) -> payment-service deve commitar a reserva em caso de sucesso
+POST {{gateway}}/api/payments
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "reservationId": "{{reservationId}}",
+  "userId": "{{userId}}",
+  "amount": 150.00,
+  "method": "CREDIT_CARD",
+  "card": {
+    "number": "4111111111111111",
+    "expiry": "12/26",
+    "cvv": "123"
+  }
+}
+
+### 7) Verificar reserva (deve retornar 404 se pagamento comitou)
+GET {{gateway}}/api/reservations/{{reservationId}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### 8) Obter ticket(s) do usuário (deve conter ticket criado após commit)
+GET {{gateway}}/api/tickets?ownerId={{userId}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}

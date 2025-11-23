@@ -5,6 +5,7 @@
 @payment = http://localhost:8085
 
 ### 1) Criar usuário (Auth)
+# @name createUser
 POST {{auth}}/users
 Content-Type: application/json
 
@@ -18,6 +19,7 @@ Content-Type: application/json
 @userId = {{createUser.response.body.id}}
 
 ### 2) Login (obter token)
+# @name login
 POST {{auth}}/auth/login/password
 Content-Type: application/json
 
@@ -30,6 +32,7 @@ Content-Type: application/json
 @accessToken = {{login.response.body.accessToken}}
 
 ### 3) Criar evento (Events)
+# @name createEvent
 POST {{events}}/api/events
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
@@ -49,20 +52,24 @@ Authorization: Bearer {{accessToken}}
 
 [
   "A1",
-  "A2"
+  "A2",
+  "A3",
+  "A4"
 ]
 
 ### 5) Criar reserva (Ticket Service)
+# @name createReservation
 POST {{ticket}}/api/reservations?userId={{userId}}&eventId={{eventId}}&ttlSeconds=300
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 [
   "A1",
-  "A2"
+  "A2",
+  "A3"
 ]
 
-@reservationId = {{create.response.body.id}}
+@reservationId = {{createReservation.response.body.id}}
 
 ### 6) Criar pagamento (Payment Service) — cenário SUCESSO
 POST {{payment}}/api/payments
@@ -99,8 +106,3 @@ Authorization: Bearer {{accessToken}}
   "amount": 150.00,
   "method": "CREDIT_CARD"
 }
-
-### Observações
-# - Se quiser conferir o ticket gerado, use diretamente o endpoint de commit do ticket-service:
-#   POST {{ticket}}/api/reservations/{{reservationId}}/commit
-#   (isso retornará o TicketResponse — atenção: se o payment-service já tiver efetuado o commit a reserva não existirá)
