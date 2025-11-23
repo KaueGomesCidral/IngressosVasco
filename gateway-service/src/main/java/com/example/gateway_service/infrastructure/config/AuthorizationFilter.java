@@ -53,7 +53,7 @@ public class AuthorizationFilter implements WebFilter {
         // Se a rota não exige autenticação, segue
         if (routeRole.entrySet().stream().noneMatch(entry -> path.startsWith(entry.getKey()))) {
             return chain.filter(exchange);
-        
+        }
 
         // Verifica se o token está no header da req como "Authorization" e inicia com "Bearer"
         String authHeader = request.getHeaders().getFirst("Authorization");
@@ -97,5 +97,4 @@ public class AuthorizationFilter implements WebFilter {
 
         return chain.filter(exchange);
     }
-}
 }
