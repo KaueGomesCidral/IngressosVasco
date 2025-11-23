@@ -2,11 +2,11 @@
 GET http://localhost:8083/s/api/events/_health
 Accept: application/json
 
-### List Events
+### Listar eventos
 GET http://localhost:8083/api/events
 Accept: application/json
 
-### Create Event
+### Criar evento
 POST http://localhost:8083/api/events
 Content-Type: application/json
 

@@ -2,11 +2,11 @@
 GET http://localhost:8084/
 Accept: application/json
 
-### Get User History
+### Pegar histórico do usuário
 GET http://localhost:8084/api/history/users/f9c85549-911c-4e12-ad30-d3f501627ae3
 Accept: application/json
 
-### Record Purchase (simula ticket-service chamando history-service)
+### Gravar compra (simula ticket-service chamando history-service)
 POST http://localhost:8084/api/history/purchases
 Content-Type: application/json
 
