@@ -2,7 +2,7 @@
 GET http://localhost:8084/s/api/history/_health
 Accept: application/json
 
-### Record Purchase (simula ticket-service chamando history-service)
+### Gravar compra (simula ticket-service chamando history-service)
 POST http://localhost:8084/api/history/purchases
 Content-Type: application/json
 
